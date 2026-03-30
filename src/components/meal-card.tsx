@@ -1,0 +1,104 @@
+import { Copy, Flame } from 'lucide-react'
+
+import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
+import { formatMacroSummary } from '@/lib/tracker'
+import { cn } from '@/lib/utils'
+import type { Entry, MealSummary } from '@/types'
+
+export function MealCard({
+  summary,
+  onDuplicate,
+  isHighlightedEntry,
+}: {
+  summary: MealSummary
+  onDuplicate: (entry: Entry) => void
+  isHighlightedEntry: (entryId: string) => boolean
+}) {
+  return (
+    <section
+      className="glass-panel flex flex-col gap-5 rounded-[2rem] p-6"
+      aria-labelledby={`meal-${summary.key}`}
+    >
+      <div className="flex items-start justify-between gap-4">
+        <div className="space-y-2">
+          <p className="eyebrow">{summary.key}</p>
+          <div>
+            <h3 id={`meal-${summary.key}`} className="text-2xl font-semibold tracking-[-0.04em]">
+              {summary.label}
+            </h3>
+            <p className="max-w-[32ch] text-sm text-[var(--muted-foreground)]">
+              {summary.description}
+            </p>
+          </div>
+        </div>
+        <div className="rounded-full border border-[var(--border-soft)] bg-[var(--surface-elevated)] px-4 py-2 text-right">
+          <div className="text-xs uppercase tracking-[0.22em] text-[var(--muted-foreground)]">
+            Total
+          </div>
+          <div className="text-xl font-semibold text-[var(--foreground)]">
+            {summary.totalCalories}
+          </div>
+        </div>
+      </div>
+
+      <Separator />
+
+      {summary.entries.length > 0 ? (
+        <ul className="flex flex-col gap-3">
+          {summary.entries.map((entry) => (
+            <li
+              key={entry.id}
+              className={cn(
+                'group flex items-start justify-between gap-4 rounded-[1.6rem] border border-[var(--border-soft)] bg-[var(--surface-subtle)] p-4 transition duration-300 hover:-translate-y-0.5 hover:border-[var(--border-strong)] hover:bg-[var(--surface-elevated)]',
+                isHighlightedEntry(entry.id) && 'entry-pop border-[var(--tone-soft-border)]',
+              )}
+            >
+              <div className="space-y-1.5">
+                <div className="flex items-center gap-2">
+                  <span className="text-base font-semibold text-[var(--foreground)]">
+                    {entry.food.name}
+                  </span>
+                  <span className="rounded-full bg-[var(--surface-elevated)] px-2.5 py-1 text-xs text-[var(--muted-foreground)]">
+                    {entry.quantity}×
+                  </span>
+                </div>
+                <p className="text-sm text-[var(--muted-foreground)]">
+                  {entry.food.servingLabel} • {formatMacroSummary(entry.food.macros)}
+                </p>
+                {entry.food.note ? (
+                  <p className="text-sm text-[var(--muted-foreground)]">{entry.food.note}</p>
+                ) : null}
+              </div>
+
+              <div className="flex shrink-0 items-center gap-2">
+                <div className="rounded-full bg-[var(--surface-elevated)] px-3 py-2 text-sm font-semibold text-[var(--foreground)]">
+                  {entry.totalCalories} kcal
+                </div>
+                <Button
+                  type="button"
+                  size="icon"
+                  variant="ghost"
+                  aria-label={`Duplicate ${entry.food.name}`}
+                  onClick={() => onDuplicate(entry)}
+                >
+                  <Copy className="size-4" />
+                </Button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div className="rounded-[1.8rem] border border-dashed border-[var(--border-soft)] bg-[var(--surface-subtle)] px-5 py-8 text-center">
+          <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-[var(--surface-elevated)] text-[var(--tone-strong)]">
+            <Flame className="size-5" />
+          </div>
+          <h4 className="text-lg font-semibold text-[var(--foreground)]">Nothing logged yet</h4>
+          <p className="mt-2 text-sm text-[var(--muted-foreground)]">
+            Add your first item to start building a clean daily picture.
+          </p>
+        </div>
+      )}
+    </section>
+  )
+}

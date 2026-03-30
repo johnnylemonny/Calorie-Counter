@@ -1,0 +1,147 @@
+[
+  {
+    "id": "greek-yogurt-berries",
+    "name": "Greek yogurt with berries",
+    "category": "Breakfast bowl",
+    "mealHints": ["breakfast", "snacks"],
+    "servingLabel": "1 bowl",
+    "calories": 220,
+    "macros": { "protein": 19, "carbs": 24, "fat": 5 },
+    "note": "Creamy, high-protein, and easy to repeat."
+  },
+  {
+    "id": "overnight-oats",
+    "name": "Overnight oats",
+    "category": "Breakfast bowl",
+    "mealHints": ["breakfast"],
+    "servingLabel": "1 jar",
+    "calories": 280,
+    "macros": { "protein": 11, "carbs": 39, "fat": 8 }
+  },
+  {
+    "id": "banana",
+    "name": "Banana",
+    "category": "Fruit",
+    "mealHints": ["breakfast", "snacks"],
+    "servingLabel": "1 medium banana",
+    "calories": 105,
+    "macros": { "protein": 1, "carbs": 27, "fat": 0 }
+  },
+  {
+    "id": "avocado-toast",
+    "name": "Avocado toast",
+    "category": "Toast",
+    "mealHints": ["breakfast", "lunch"],
+    "servingLabel": "2 slices",
+    "calories": 310,
+    "macros": { "protein": 9, "carbs": 28, "fat": 18 }
+  },
+  {
+    "id": "protein-shake",
+    "name": "Protein shake",
+    "category": "Drink",
+    "mealHints": ["breakfast", "snacks"],
+    "servingLabel": "1 shaker",
+    "calories": 190,
+    "macros": { "protein": 30, "carbs": 8, "fat": 4 }
+  },
+  {
+    "id": "chicken-rice-bowl",
+    "name": "Chicken rice bowl",
+    "category": "Lunch bowl",
+    "mealHints": ["lunch", "dinner"],
+    "servingLabel": "1 bowl",
+    "calories": 520,
+    "macros": { "protein": 39, "carbs": 48, "fat": 18 }
+  },
+  {
+    "id": "turkey-sandwich",
+    "name": "Turkey sandwich",
+    "category": "Sandwich",
+    "mealHints": ["lunch"],
+    "servingLabel": "1 sandwich",
+    "calories": 360,
+    "macros": { "protein": 24, "carbs": 33, "fat": 14 }
+  },
+  {
+    "id": "caesar-salad",
+    "name": "Chicken Caesar salad",
+    "category": "Salad",
+    "mealHints": ["lunch", "dinner"],
+    "servingLabel": "1 plate",
+    "calories": 410,
+    "macros": { "protein": 31, "carbs": 15, "fat": 24 }
+  },
+  {
+    "id": "salmon-potatoes",
+    "name": "Salmon with roasted potatoes",
+    "category": "Dinner plate",
+    "mealHints": ["dinner"],
+    "servingLabel": "1 plate",
+    "calories": 610,
+    "macros": { "protein": 38, "carbs": 41, "fat": 30 }
+  },
+  {
+    "id": "pasta-arrabbiata",
+    "name": "Pasta arrabbiata",
+    "category": "Pasta",
+    "mealHints": ["lunch", "dinner"],
+    "servingLabel": "1 bowl",
+    "calories": 470,
+    "macros": { "protein": 14, "carbs": 68, "fat": 15 }
+  },
+  {
+    "id": "steak-veg",
+    "name": "Steak with vegetables",
+    "category": "Dinner plate",
+    "mealHints": ["dinner"],
+    "servingLabel": "1 plate",
+    "calories": 540,
+    "macros": { "protein": 42, "carbs": 18, "fat": 31 }
+  },
+  {
+    "id": "apple",
+    "name": "Apple",
+    "category": "Fruit",
+    "mealHints": ["breakfast", "snacks"],
+    "servingLabel": "1 medium apple",
+    "calories": 95,
+    "macros": { "protein": 1, "carbs": 25, "fat": 0 }
+  },
+  {
+    "id": "almonds",
+    "name": "Roasted almonds",
+    "category": "Snack",
+    "mealHints": ["snacks"],
+    "servingLabel": "30 g",
+    "calories": 174,
+    "macros": { "protein": 6, "carbs": 6, "fat": 15 }
+  },
+  {
+    "id": "dark-chocolate",
+    "name": "Dark chocolate squares",
+    "category": "Snack",
+    "mealHints": ["snacks"],
+    "servingLabel": "4 squares",
+    "calories": 210,
+    "macros": { "protein": 3, "carbs": 18, "fat": 15 }
+  },
+  {
+    "id": "cottage-cheese",
+    "name": "Cottage cheese cup",
+    "category": "Snack",
+    "mealHints": ["breakfast", "snacks"],
+    "servingLabel": "1 cup",
+    "calories": 180,
+    "macros": { "protein": 24, "carbs": 8, "fat": 5 }
+  },
+  {
+    "id": "egg-wrap",
+    "name": "Egg wrap",
+    "category": "Savory breakfast",
+    "mealHints": ["breakfast", "lunch"],
+    "servingLabel": "1 wrap",
+    "calories": 330,
+    "macros": { "protein": 20, "carbs": 24, "fat": 17 }
+  }
+]
