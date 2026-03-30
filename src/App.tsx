@@ -23,7 +23,13 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
 import { Slider } from '@/components/ui/slider'
-import { foodCatalog, mealMeta, targetPresets } from '@/data/foods'
+import {
+  featuredFoodCatalog,
+  generatedFoodCatalogUrl,
+  mealMeta,
+  mergeFoodCatalogs,
+  targetPresets,
+} from '@/data/foods'
 import { useCalorieTracker } from '@/hooks/use-calorie-tracker'
 import { useTheme } from '@/hooks/use-theme'
 import {
@@ -33,7 +39,7 @@ import {
   getMealSummaries,
 } from '@/lib/tracker'
 import { cn } from '@/lib/utils'
-import type { Entry, FoodSnapshot, MealKey } from '@/types'
+import type { Entry, FoodItem, FoodSnapshot, MealKey } from '@/types'
 
 const navItems = [
   { label: 'Tracker', href: '#tracker' },
@@ -46,9 +52,9 @@ function wildcardToRegExp(query: string) {
   return new RegExp(escaped, 'i')
 }
 
-function filterFoods(query: string) {
+function filterFoods(catalog: FoodItem[], query: string) {
   const matcher = wildcardToRegExp(query)
-  return foodCatalog.filter((food) =>
+  return catalog.filter((food) =>
     matcher.test(`${food.name} ${food.category} ${food.note ?? ''}`),
   )
 }
@@ -74,12 +80,15 @@ function App() {
   const [submittedQuery, setSubmittedQuery] = useState('')
   const [searchWarning, setSearchWarning] = useState<string | null>(null)
   const [visibleResults, setVisibleResults] = useState(25)
-  const [selectedFoodId, setSelectedFoodId] = useState<string | null>(foodCatalog[0]?.id ?? null)
+  const [selectedFoodId, setSelectedFoodId] = useState<string | null>(
+    featuredFoodCatalog[0]?.id ?? null,
+  )
   const [servings, setServings] = useState(1)
   const [customName, setCustomName] = useState('')
   const [customCalories, setCustomCalories] = useState('240')
   const [customServingLabel, setCustomServingLabel] = useState('1 plate')
   const [customServings, setCustomServings] = useState(1)
+  const [foodCatalog, setFoodCatalog] = useState(featuredFoodCatalog)
 
   const targetInputId = useId()
   const totals = getDailyTotals(state.entries, state.settings.dailyTarget)
@@ -88,7 +97,7 @@ function App() {
   const recentFoods = state.recentFoods.slice(0, 4)
 
   const searchResults =
-    submittedQuery.trim().length > 0 ? filterFoods(submittedQuery.trim()) : foodCatalog
+    submittedQuery.trim().length > 0 ? filterFoods(foodCatalog, submittedQuery.trim()) : foodCatalog
   const suggestedFoods =
     submittedQuery.trim().length > 0
       ? searchResults
@@ -98,6 +107,45 @@ function App() {
   const visibleFoodResults = suggestedFoods.slice(0, visibleResults)
   const selectedFood =
     foodCatalog.find((food) => food.id === selectedFoodId) ?? visibleFoodResults[0] ?? null
+
+  useEffect(() => {
+    let active = true
+
+    const loadFoodCatalog = async () => {
+      try {
+        const response = await fetch(generatedFoodCatalogUrl)
+        if (!response.ok) {
+          throw new Error(`Failed to load ${generatedFoodCatalogUrl}`)
+        }
+
+        const importedFoodCatalog = (await response.json()) as FoodItem[]
+
+        if (active) {
+          setFoodCatalog(mergeFoodCatalogs(featuredFoodCatalog, importedFoodCatalog))
+        }
+      } catch {
+        if (active) {
+          setFoodCatalog(featuredFoodCatalog)
+        }
+      }
+    }
+
+    void loadFoodCatalog()
+
+    return () => {
+      active = false
+    }
+  }, [])
+
+  useEffect(() => {
+    setSelectedFoodId((current) => {
+      if (current && foodCatalog.some((food) => food.id === current)) {
+        return current
+      }
+
+      return foodCatalog[0]?.id ?? null
+    })
+  }, [foodCatalog])
 
   useEffect(() => {
     if (!lastAddedEntryId) {
@@ -118,7 +166,7 @@ function App() {
       return
     }
 
-    const matches = filterFoods(trimmed)
+    const matches = filterFoods(foodCatalog, trimmed)
     setSubmittedQuery(trimmed)
     setVisibleResults(25)
     setSearchWarning(

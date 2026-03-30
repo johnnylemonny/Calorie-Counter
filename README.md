@@ -93,8 +93,7 @@ src/
 - U.S. Department of Agriculture MyPyramid Food Raw Data
 - WebMD calorie counter example
 
-The food dataset in this demo is intentionally curated and stored locally as JSON for a lighter front-end-only experience. It is structured so it can be replaced later with a fuller transformed dataset.
-If you have `My Foodapedia` files in `xlsx` or `xml`, they can be used as the source for a one-time import step that converts them into the local JSON catalog this app reads at startup.
+The food catalog is generated locally from the `food_tables/` exports in this repository and stored as JSON for a lighter front-end-only experience. The import script accepts the My Foodapedia XML/XLSX tables included in the repo and converts them into the catalog the app reads at startup.
 
 ## Roadmap ideas
 

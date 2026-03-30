@@ -1,4 +1,4 @@
-import { demoEntries, foodCatalog, mealMeta } from '@/data/foods'
+import { demoEntries, featuredFoodCatalog, mealMeta } from '@/data/foods'
 import type {
   Entry,
   FoodItem,
@@ -80,7 +80,7 @@ export function formatMacroSummary(macros?: FoodSnapshot['macros']) {
 }
 
 export function getFoodById(foodId: string) {
-  return foodCatalog.find((item) => item.id === foodId) ?? null
+  return featuredFoodCatalog.find((item: FoodItem) => item.id === foodId) ?? null
 }
 
 export function buildDemoEntries() {

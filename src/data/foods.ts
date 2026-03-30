@@ -1,4 +1,5 @@
-import rawFoodCatalog from '@/data/foods.json'
+import curatedFoodCatalog from '@/data/foods.json'
+import generatedFoodCatalogUrl from '@/data/foods.generated.json?url'
 import type { FoodItem, MealKey } from '@/types'
 
 export const mealMeta: Record<MealKey, { label: string; description: string }> = {
@@ -22,7 +23,26 @@ export const mealMeta: Record<MealKey, { label: string; description: string }> =
 
 export const targetPresets = [1600, 2000, 2400]
 
-export const foodCatalog = rawFoodCatalog as FoodItem[]
+function uniqueFoods(items: FoodItem[]) {
+  const seen = new Map<string, FoodItem>()
+
+  for (const food of items) {
+    const signature = `${food.name.toLowerCase()}|${food.servingLabel.toLowerCase()}|${food.calories}|${food.category.toLowerCase()}`
+
+    if (!seen.has(signature)) {
+      seen.set(signature, food)
+    }
+  }
+
+  return Array.from(seen.values())
+}
+
+export function mergeFoodCatalogs(...catalogs: FoodItem[][]) {
+  return uniqueFoods(catalogs.flat())
+}
+
+export const featuredFoodCatalog = curatedFoodCatalog as FoodItem[]
+export { generatedFoodCatalogUrl }
 
 export const demoEntries = [
   { meal: 'breakfast', sourceId: 'overnight-oats', quantity: 1 },
